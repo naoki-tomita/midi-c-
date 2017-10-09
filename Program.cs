@@ -149,7 +149,7 @@ namespace Project {
         string text;
         public TextEvent(string text) {
           this.text = text;
-          // Console.WriteLine(text);
+          Console.WriteLine(text);
         }
       }
       public class CommentEvent: TextEvent { public CommentEvent(string text):base(text) {} }
@@ -241,8 +241,7 @@ namespace Project {
           }
           {
             if (buf[i] < 0x80) {
-              i += 5;
-              continue;
+              // It must used be running status.
             } else if (buf[i] >= 0x80 && buf[i] < 0x90) {
               // note off
               e = new NoteOffEvent(buf[++i]);
@@ -252,7 +251,13 @@ namespace Project {
               e = new NoteOnEvent(buf[++i], buf[++i]);
               i++;
             } else if (buf[i] < 0xF0) {
-              // control change
+              // 0xA0 ~ 0xEF
+              // control change event is only 0xBn type.
+              // 0xAn After Touch 2
+              // 0xBn Control Change 2
+              // 0xCn Program Change 1
+              // 0xDn Channel Pressure 1
+              // 0xEn Pitch Bend Change 2
               e = new ControlChangeEvent(buf[++i], buf[++i]);
               i++;
             } else if (buf[i] < 0xFF) {
@@ -288,6 +293,7 @@ namespace Project {
               }
             }
           }
+          Console.WriteLine(e.GetType());
           track.Add(new ChunkData(d, e));
         }
         return track;

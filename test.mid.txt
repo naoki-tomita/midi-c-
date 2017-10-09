@@ -1,23 +1,26 @@
 4D 54 68 64 00 00 00 06 
-00 01 00 03 03 C0
+00 01 // Format 1
+00 03 // 3 Tracks
+03 C0 // 960 Time Slice
 
 4D 54 72 6B 00 00 00 29 
-00     FF 51 03 07 A1 20 
-00     FF 59 02 00 00 
-00     FF 02 04 54 65 73 74 
-00     FF 03 04 54 65 73 74
-00     FF 58 04 04 02 18 08 
-00     FF 2F 00
+00     FF 51 03 07 A1 20 // Tempo (500000 micro sec) = 50ms = 120 bps
+00     FF 59 02 00 00 // Key C major
+00     FF 02 04 54 65 73 74 // Text "Test"
+00     FF 03 04 54 65 73 74 // Text "Test"
+00     FF 58 04 04 02 18 08 // Beat 4 / 4(= 2^2), use Quarter note, Count of 32note in Quarter note.
+00     FF 2F 00 // End Event
 
 4D 54 72 6B 00 00 00 5D 
-00 B0     00 00 
-00 20 00 00 C0 00 ???
-00        FF 03 06 E7 84 A1 E9 A1 8C 
-00        B0 07 7F 
-00        90 48 50 
-87 40     80 48 00 
-87 40     90 48 50 
-87 40     80 48 00 
+00        B0 00 00 // Control Change Channel 0 BankS elect -> 00
+00           20 00 // Control Change Channel 0 LSB for Control 0 (Bank Select) -> 00 // use running status
+00        C0 00    // Control Change Channel 0 Program Change -> 00
+00        FF 03 06 E7 84 A1 E9 A1 8C // Text "無題"
+00        B0 07 7F // Control Change Channel 0 Channel Volume -> 128(Full)
+00        90 48 50 // Note on C4 Velocity 50
+87 40     80 48 00 // Note Off C4 Velocity 50
+87 40     90 48 50 // ...
+87 40     80 48 00
 87 40     90 48 50 
 83 60     80 48 00 
 83 60     90 48 50 
@@ -25,13 +28,14 @@
 83 60     90 48 50 
 83 60     80 48 00
 83 60     90 48 50 
-83 60     80 48 00 
-82 AF 5F  B0 7F 00 
-00        FF 2F 00 
+83 60     80 48 00 // ... Note Off
+82 AF 5F  B0 7F 00 // Poly Mode On 
+00        FF 2F 00 // End Event
 
 4D 54 72 6B 00 00 00 2B
 00        B1 00 00 
-00 20 00 00 C1 00 ???
+00           20 00 
+00        C1 00
 00        FF 03 06 E7 84 A1 E9 A1 8C 
 00        B1 07 7F
 00        91 30 50 
